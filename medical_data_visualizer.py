@@ -38,8 +38,6 @@ def draw_cat_plot():
 
 # 10
 def draw_heat_map():
-    df['bmi'] = np.divide(df['weight'], np.square(df['height'] / 100))
-    
     df.drop(df[(df['ap_lo'] > df['ap_hi'])].index, inplace=True)
     df.drop(df[(df['height'] < df['height'].quantile(0.025))].index, inplace=True)
     df.drop(df[(df['height'] > df['height'].quantile(0.975))].index, inplace=True)
@@ -50,7 +48,7 @@ def draw_heat_map():
     corr = df.corr()
     mask = np.triu(corr)
     fig, ax = plt.subplots(figsize=(12, 8))
-    
+
     sns.heatmap(corr, annot=True, fmt='.1f', mask=mask, square=True, center=0, vmin=-0.1, vmax=0.25, cbar_kws={'shrink': 0.45})
     ax.set_title('Correlation Matrix')
     ax.spines['top'].set_visible(False)
